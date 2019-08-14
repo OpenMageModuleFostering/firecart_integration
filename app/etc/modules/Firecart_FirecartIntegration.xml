@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Firecart_FirecartIntegration>
+      <active>true</active>
+      <codePool>community</codePool>
+      <version>0.1.0</version>
+    </Firecart_FirecartIntegration>
+  </modules>
+
+<frontend>
+    <layout>
+        <updates>
+            <Firecart_FirecartIntegration>
+                <file>Firecart_FirecartIntegration.xml</file>
+            </Firecart_FirecartIntegration>
+        </updates>
+    </layout>
+</frontend>
+</config>

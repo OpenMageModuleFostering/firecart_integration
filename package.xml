@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>firecart_integration</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license>Open Software License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Integrate your magento with Firecart. A powerful marketing automation tool.</summary>
+    <description>To automate sales, marketing to attract new leads, generate more revenue from current customers and grow your business leaps and bound.</description>
+    <notes>This is a first release of firecart. Please use support to contact in case of queries.</notes>
+    <authors><author><name>Canvass Tech</name><user>MAG001899698</user><email>ankur@canvass.in</email></author></authors>
+    <date>2016-02-08</date>
+    <time>04:57:03</time>
+    <contents><target name="magecommunity"><dir name="Firecart"><dir name="FirecartIntegration"><dir name="Helper"><file name="Data.php" hash="0a9926b49f68e7986d5e2de4d4e223a6"/></dir><dir name="Model"><dir name="Api2"><dir name="Customer"><dir name="Rest"><dir name="Admin"><file name="V1.php" hash="1ad19bb5a3e0e26c57e96d16bb2e3db6"/></dir></dir></dir><dir name="Order"><dir name="Rest"><dir name="Admin"><file name="V1.php" hash="36ddede8d759bb9a984711e682c7b462"/></dir></dir></dir></dir><file name="Observer.php" hash="7c18e34ba7982127d869c63e3a9f50f3"/><dir name="Sales"><dir name="Api2"><dir name="Order"><dir name="Rest"><dir name="Admin"><file name="V1.php" hash="bf68c19498c011fab46514ad8c751d00"/></dir></dir><file name="Rest.php" hash="171d7ebddedec4275071f1a34fd507c3"/></dir></dir></dir><file name="Settings.php" hash="b99420e2b336db95431ca27866beddd6"/></dir><dir name="Theme"><file name="script.html" hash="0cb8b8148c971fefca46ba06284ab805"/><file name="script.phtml" hash="f63c2614b6c174a5781f488407a9a973"/></dir><dir name="etc"><file name="api2.xml" hash="10e41eb9eb66972eba71a7963660452f"/><file name="config.xml" hash="8dc7096b5b02329ea84d5592b609b17b"/><file name="system.xml" hash="f8f9ad1880a7d474e0f69cda3b32b000"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Firecart_FirecartIntegration.xml" hash="b8c4d69f69deb71e03054c4d97ca4daa"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="firecart_firecartintegration"><file name="abandoned_cart_script.phtml" hash="8f7aede243e6696f60bf6b4cb4ed83e4"/><file name="purchase_info_tracking.phtml" hash="9b1a9a26218c06c4a01e60a80ec6b3a5"/><file name="script.phtml" hash="846b17b944ad7928837da44f3ada7941"/></dir></dir><dir name="layout"><file name="firecart_firecartintegration.xml" hash="684e8363131ff0c257fb9460c211c01c"/></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

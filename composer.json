@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/firecart_integration",
+    "type": "magento-module",
+    "license": "Open-Software-License",
+    "homepage": "",
+    "description": "Integrate your magento with Firecart. A powerful marketing automation tool.",
+    "authors": [
+    {
+        "name": "Canvass Tech",
+        "email": "ankur@canvass.in"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

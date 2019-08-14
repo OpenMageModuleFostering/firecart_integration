@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+    <non_conversion_tracking_handle translate="label">
+        <label>non_conversion_tracking_handle</label>
+        <reference name="head">
+            <block type="core/template" name="my_script1" template="firecart_firecartintegration/script.phtml">
+            </block>
+        </reference>
+    </non_conversion_tracking_handle>
+    <conversion_tracking_handle translate="label">
+        <label>conversion_tracking_handle</label>
+        <reference name="head">
+            <block type="core/template" name="my_script2" template="firecart_firecartintegration/purchase_info_tracking.phtml">
+            </block>
+        </reference>
+    </conversion_tracking_handle>
+</layout>

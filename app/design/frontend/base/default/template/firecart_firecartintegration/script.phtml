@@ -1,0 +1,73 @@
+<script src="//s3-ap-southeast-1.amazonaws.com/ecom-new/res/integrations/firecart-integration.js"></script>
+<?php
+$fc_00_accessKey = Mage::getStoreConfig('firecart_options/messages/access_key');
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+    $fc_00_customer = Mage::getSingleton('customer/session')->getCustomer();
+    $fc_00_name = $fc_00_customer->getFirstname() . ' ' . $fc_00_customer->getLastname();
+    $fc_00_email = $fc_00_customer->getEmail();
+    $fc_00_mobile = '';
+    if ($address = $fc_00_customer->getPrimaryBillingAddress()) {
+        $fc_00_mobile = $address->getTelephone();
+    }
+}
+
+
+$_fc_add_to_cart_product = Mage::getModel('core/session')->getProductToShoppingCart();
+$fc_00_isCartUpdated = false;
+if ($_fc_add_to_cart_product && $_fc_add_to_cart_product->getId()):
+    $fc_00_isCartUpdated = true;
+    $quote = Mage::getSingleton('checkout/session')->getQuote();
+    $fc_00_cartUrl = Mage::getSingleton('checkout/session')->getCartUrl();
+    $cartItems = $quote->getAllVisibleItems();
+    $fc_00_products_arr = array();
+    foreach ($cartItems as $item) {
+        $productId = $item->getProductId();
+        $product = Mage::getModel('catalog/product')->load($productId);
+        $fc_00_product_price = $product->getPrice();
+        $fc_00_product_url = $product->getProductUrl();
+        $fc_00_product_img = $product->getSmallImageUrl();
+        array_push($fc_00_products_arr, array('name' => $product->getName(), 'image' => $fc_00_product_img, 'url' => $fc_00_product_url, 'price' => $fc_00_product_price));
+    }
+    Mage::getModel('core/session')->unsProductToShoppingCart();
+endif;
+?>
+
+<script type="text/javascript">
+    (function () {
+        var fc_custName = '<?php echo $fc_00_name; ?>';
+        var fc_custEmail = '<?php echo $fc_00_email; ?>';
+        var fc_custMobile = '<?php echo $fc_00_mobile; ?>';
+        var fc_accessKey = '<?php echo $fc_00_accessKey; ?>';
+        var fc_cartUrl = '<?php echo $fc_00_cartUrl; ?>';
+        var fc_products = <?php echo json_encode($fc_00_products_arr); ?>;
+        var fc_isCartUpdated = <?php echo json_encode($fc_00_isCartUpdated); ?>;
+        if (fc_accessKey !== undefined && fc_accessKey !== '') {
+            firecartWebAPI.init(fc_accessKey).ready(function () {
+                if (fc_custEmail !== undefined && fc_custEmail !== "") {
+                    var custObj = {
+                        name: fc_custName,
+                        mobile: fc_custMobile,
+                        email: fc_custEmail
+                    }
+                    firecartWebAPI.setUser(custObj, function () {
+                        if (fc_isCartUpdated) {
+                            var abandonedCartInfo = {
+                                email: fc_custEmail
+                            }
+                            if (fc_products.length > 0) {
+                                var items = [];
+                                items = fc_products;
+                                abandonedCartInfo.items = items;
+                                abandonedCartInfo.cartUrl = fc_cartUrl;
+                                firecartWebAPI.trackCartInfo(abandonedCartInfo);
+                            } else {
+                                firecartWebAPI.clearCartInfo(abandonedCartInfo);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    })();
+
+</script>

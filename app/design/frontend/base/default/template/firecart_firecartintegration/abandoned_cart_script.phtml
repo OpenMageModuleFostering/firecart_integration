@@ -1,0 +1,38 @@
+<?php
+$_fc_add_to_cart_product = Mage::getModel('core/session')->getProductToShoppingCart();
+if ($_fc_add_to_cart_product && $_fc_add_to_cart_product->getId()):
+    $quote = Mage::getSingleton('checkout/session')->getQuote();
+    $cartUrl = Mage::getSingleton('checkout/session')->getCartUrl();
+    $cartItems = $quote->getAllVisibleItems();
+    $fc_00_products_arr = array();
+    foreach ($cartItems as $item) {
+        $productId = $item->getProductId();
+        $product = Mage::getModel('catalog/product')->load($productId);
+        $fc_00_product_price = $product->getPrice();
+        $fc_00_product_url = $product->getProductUrl();
+        $fc_00_product_img = $product->getSmallImageUrl();
+        array_push($fc_00_products_arr, array('name' => $product->getName(), 'image' => $fc_00_product_img, 'url' => $fc_00_product_url, 'price' => $fc_00_product_price));
+    }
+    ?>
+
+    <script type="text/javascript">
+        (function () {
+            firecartWebAPI.ready(function () {
+                var fc_cartUrl = '<?php echo $fc_00_cartUrl; ?>';
+                var fc_products = <?php echo json_encode($fc_00_products_arr); ?>;
+                if (fc_products.length > 0) {
+                    var abandonedCartInfo = {
+                        cartUrl: fc_cartUrl
+                    }
+                    var items = [];
+                    items = fc_products;
+                    abandonedCartInfo.items = items;
+                    firecartWebAPI.trackCartInfo(abandonedCartInfo);
+                }
+            });
+        })();
+    </script>
+    <?php
+    Mage::getModel('core/session')->unsProductToShoppingCart();
+endif;
+?>

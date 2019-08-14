@@ -1,0 +1,20 @@
+
+
+
+
+<script src="//s3-ap-southeast-1.amazonaws.com/ecom-new/res/integrations/firecart-integration.js"></script>
+
+
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $customer = Mage::getSingleton('customer/session')->getCustomer();
+            <!-- $customerData = Mage::getModel('customer/customer')->load($customer->getId())->getData(); -->
+    $name = $customer->getFirstname() . ' ' . $customer->getLastname();
+    $email = $customer->getEmail();
+    $mobile = $customer->getPrimaryBillingAddress()->getTelephone();
+        }
+
+<script type="text/javascript"> 
+var custObj = '<?php echo $name; ?>';
+console.log(custObj);
+firecartWebAPI.init("b997ff3df081a49d219077fb566786c4b6cd9b55").ready(function(){}); 
+</script>

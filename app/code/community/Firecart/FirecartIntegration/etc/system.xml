@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <firecartconfig translate="label" module="firecartintegration">
+            <label>Firecart</label>
+            <sort_order>99999</sort_order>
+        </firecartconfig>
+    </tabs> 
+    <sections>
+        <firecart_options translate="label" module="firecartintegration">
+            <label>Firecart API Credentials</label>
+            <tab>firecartconfig</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store> 
+            <groups>
+                <messages translate="label">
+                    <label>API Credentials</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <comment><![CDATA[<a href="http://app.firecart.io" target="_blank"><button title="Sign up or Login to Firecart" type="button" class="scalable" style=""><span>Sign up or Login to Firecart</span></button></a>]]></comment>
+                    <fields>
+                        <access_key translate="label">
+                            <label>Enter your firecart's access key</label>
+                            <frontend_type>text</frontend_type>
+                            <backend_model>firecartintegration/settings</backend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>                    
+                        </access_key> 
+                    </fields>
+                </messages>
+            </groups>
+        </firecart_options>
+    </sections> 
+</config>

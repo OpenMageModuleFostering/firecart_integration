@@ -1,0 +1,85 @@
+<script src="//s3-ap-southeast-1.amazonaws.com/ecom-new/res/integrations/firecart-integration.js"></script>
+<?php
+$fc_00_accessKey = Mage::getStoreConfig('firecart_options/messages/access_key');
+$fc_00_session = Mage::getSingleton('checkout/type_onepage')->getCheckout();
+$fc_00_session->getLastSuccessQuoteId();
+$fc_00_orderId = $fc_00_session->getLastOrderId();
+// If checkout onepage singleton not work then use checkout session
+if (is_null($fc_00_orderId)) {
+    $fc_00_orderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+}
+
+if ($fc_00_orderId) {
+    $fc_00_order = Mage::getModel('sales/order')->load($fc_00_orderId);
+    if ($fc_00_order->getId()) {
+        //If they have no customer id, they're a guest.
+        if ($fc_00_order->getCustomerId() === NULL) {
+            $fc_00_name = $fc_00_order->getBillingAddress()->getFirstname() . ' ' . $fc_00_order->getBillingAddress()->getLastname();
+            $fc_00_mobile = $fc_00_order->getBillingAddress()->getTelephone();
+            $fc_00_email = $fc_00_order->getBillingAddress()->getEmail();
+        } else {
+            //else, they're a normal registered user.
+            $fc_00_customer = Mage::getModel('customer/customer')->load($fc_00_order->getCustomerId());
+            $fc_00_name = $fc_00_customer->getFirstname() . ' ' . $fc_00_customer->getLastname();
+            $fc_00_email = $fc_00_customer->getEmail();
+            $fc_00_mobile = '';
+            if ($address = $fc_00_customer->getPrimaryBillingAddress()) {
+                $fc_00_mobile = $address->getTelephone();
+            }
+        }
+
+        $fc_00_items = $fc_00_order->getAllVisibleItems();
+        $fc_00_totalPriceWidoutDiscount = $fc_00_order->getGrandTotal() + $fc_00_order->getDiscountAmount();
+        $fc_00_products_arr = array();
+        foreach ($fc_00_items as $fc_00_item) {
+            $fc_00_item->getName(); // product name 
+            $fc_00_item->getPrice();
+            $fc_00_item->getSku();
+            $fc_00_item->getProductId();
+            $fc_00_item->getQtyOrdered();
+            // load product model for gettting images
+            $fc_00_product = Mage::getModel('catalog/product')->load($fc_00_item->getProductId());
+            if ($fc_00_product->getId()):
+                $fc_00_product_url = $fc_00_product->getProductUrl();
+                $fc_00_product_img = $fc_00_product->getSmallImageUrl();
+                array_push($fc_00_products_arr, array('name' => $fc_00_item->getName(), 'image' => $fc_00_product_img, 'url' => $fc_00_product_url));
+            endif;
+        }
+    }
+}
+?>
+
+<script type="text/javascript">
+    var fc_custName = '<?php echo $fc_00_name; ?>';
+    var fc_custEmail = '<?php echo $fc_00_email; ?>';
+    var fc_custMobile = '<?php echo $fc_00_mobile; ?>';
+    var fc_accessKey = '<?php echo $fc_00_accessKey; ?>';
+    var fc_totalPrice = '<?php echo $fc_00_totalPriceWidoutDiscount; ?>';
+    fc_totalPrice = fc_totalPrice ? (fc_totalPrice) : 0;
+
+    var fc_products = <?php echo json_encode($fc_00_products_arr); ?>;
+    if (fc_accessKey !== undefined && fc_accessKey !== '') {
+        firecartWebAPI.init(fc_accessKey).ready(function () {
+            var ME = this;
+            if (fc_custEmail !== undefined && fc_custEmail !== "") {
+                var custObj = {
+                    name: fc_custName,
+                    mobile: fc_custMobile,
+                    email: fc_custEmail
+                }
+                ME.setUser(custObj, function () {
+                    if (fc_products.length > 0) {
+                        var purchase = {
+                            email: fc_custEmail,
+                            purchaseAmount: fc_totalPrice
+                        }
+                        var items = [];
+                        items = fc_products;
+                        purchase.items = items;
+                        ME.trackPurchase(purchase);
+                    }
+                });
+            }
+        });
+    }
+</script>

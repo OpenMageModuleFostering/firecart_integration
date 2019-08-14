@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <firecartintegration translate="title" module="Firecart_FirecartIntegration">
+                <title>Firecart API</title>
+                <sort_order>10</sort_order>
+            </firecartintegration>
+        </resource_groups>
+        <resources>
+            <firecartintegration_order translate="title" module="Firecart_FirecartIntegration">
+                <group>firecartintegration</group>
+                <model>firecartintegration/api2_order</model>
+                <title>Firecart Order Rest API</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes>
+                    <entity_id>Order ID (internal)</entity_id>
+                    <increment_id>Order ID</increment_id>
+                    <created_at>Order Date</created_at>
+                    <status>Order Status</status>
+                    <shipping_description>Shipping Method</shipping_description>
+                    <_payment_method>Payment Method</_payment_method>
+                    <base_currency_code>Base Currency</base_currency_code>
+                    <store_currency_code>Order Currency</store_currency_code>
+                    <store_name>Store Name</store_name>
+                    <store_to_order_rate>Store Currency to Order Currency Rate</store_to_order_rate>
+                    <subtotal>Subtotal</subtotal>
+                    <subtotal_incl_tax>Subtotal Including Tax</subtotal_incl_tax>
+                    <discount_amount>Discount</discount_amount>
+                    <base_grand_total>Grand Total to Be Charged</base_grand_total>
+                    <grand_total>Grand Total</grand_total>
+                    <shipping_amount>Shipping Amount</shipping_amount>
+                    <base_discount_amount>Base Discount</base_discount_amount>
+                    <base_subtotal>Base Subtotal</base_subtotal>
+                    <total_paid>Total Paid</total_paid>
+                    <customer_id>Customer ID</customer_id>
+                </attributes>
+                <force_attributes>
+                    <admin>
+                        <addresses>1</addresses>
+                        <order_items>1</order_items>
+                    </admin>
+                </force_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/firecart/orders/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/firecart/orders</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </firecartintegration_order>
+            <firecartintegration_customer translate="title" module="Firecart_FirecartIntegration">
+                <group>firecartintegration</group>
+                <model>firecartintegration/api2_customer</model>
+                <title>Firecart Customer Rest API</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes>
+                    <entity_id>Customer ID</entity_id>
+                    <firstname>First Name</firstname>
+                    <lastname>Last Name</lastname>
+                    <email>Email</email>
+                    <gender>Gender</gender>
+                    <website_id>Associate to Website</website_id>
+                    <created_at>Created At</created_at>
+                    <created_in>Created From</created_in>
+                    <group_id>Group</group_id>
+                    <confirmation>Is Confirmed</confirmation>
+                    <total_amount_spent>Total Spent</total_amount_spent>
+                    <orders_count>Orders Count</orders_count>
+                    <last_order_id>Last Order Id</last_order_id>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/firecart/customers/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/firecart/customers</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </firecartintegration_customer>
+        </resources>
+    </api2>
+</config>
